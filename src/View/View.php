@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Пользователь</title>
-</head>
-<body>
-<h1>Данные пользователя</h1>
-<!-- Здесь выводятся данные пользователя -->
-</body>
-</html>
-
-***********
-
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">

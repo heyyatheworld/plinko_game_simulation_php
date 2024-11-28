@@ -1,31 +1,13 @@
 <?php
-namespace MyApp\Controller;
 
-use MyApp\Model\User;
-
-class UserController {
+class Controller {
     public function show($id) {
-        $user = new User();
-        $data = $user->getUser($id);
-        include '../View/user_view.php'; // Передача данных в представление
-    }
-}
-?>
-
-****************
-
-<?php
-namespace MyApp\Controller;
-
-use MyApp\Model\User;
-
-class UserController {
-    public function show($id) {
-        $userModel = new User();
+        $userModel = new Game();
         $user = $userModel->getUser($id);
 
         if ($user) {
-            include '../View/user_view.php'; // Подключение представления с данными пользователя
+            #include '../src/View/View.php'; // Подключение представления с данными пользователя
+            include __DIR__ . '/../View/View.php';
         } else {
             echo "Пользователь не найден.";
         }
