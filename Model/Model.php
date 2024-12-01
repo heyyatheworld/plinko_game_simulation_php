@@ -1,5 +1,5 @@
 <?php
-class ValueModel {
+class Model {
     public $return_to_player;
     public $level;
     public $number_of_games;

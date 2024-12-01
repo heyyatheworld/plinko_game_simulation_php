@@ -3,7 +3,7 @@ require_once 'Model/Model.php';
 
 class Controller {
     public function handleRequest() {
-        $model = new ValueModel();
+        $model = new Model();
         $errors = [];
         if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
             // Ваш код обработки формы
@@ -11,7 +11,7 @@ class Controller {
             //if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['reset'])) {
                 // Сброс значений
-                return new ValueModel(); // Возвращаем пустую модель
+                return new Model(); // Возвращаем пустую модель
             } else {
                 // Получение значений из формы
                 $model->return_to_player = isset($_POST['value1']) ? htmlspecialchars(trim($_POST['value1'])) : '';
