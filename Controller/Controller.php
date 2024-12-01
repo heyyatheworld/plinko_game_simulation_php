@@ -7,8 +7,8 @@ class Controller {
         $errors = [];
         if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
             // Ваш код обработки формы
-        //}
-        //if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            //}
+            //if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['reset'])) {
                 // Сброс значений
                 return new ValueModel(); // Возвращаем пустую модель
@@ -29,10 +29,25 @@ class Controller {
                     $errors[] = 'Значение 3 не должно быть пустым.';
                 }
 
-                return [$model, $errors];
+                $model->calculate();
+                if ($this->saveResult($model)) {
+                    echo "Результат успешно сохранен.";
+                } else {
+                    echo "Ошибка при сохранении результата.";
+                }
             }
         }
 
         return [$model, $errors];
+    }
+
+    public function saveResult($model) {
+        global $pdo; // Используем глобальную переменную для доступа к PDO
+
+        // Подготовка SQL-запроса
+        $stmt = $pdo->prepare("INSERT INTO results (return_to_player, level, number_of_games, result) VALUES (?, ?, ?, ?)");
+
+        // Выполнение запроса с параметрами
+        return $stmt->execute([$model->return_to_player, $model->level, $model->number_of_games, $model->result]);
     }
 }
