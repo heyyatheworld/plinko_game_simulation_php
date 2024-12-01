@@ -2,7 +2,7 @@
 
 class Controller {
     public function show($id) {
-        $userModel = new Game();
+        $userModel = new Game1();
         $user = $userModel->getUser($id);
 
         if ($user) {
