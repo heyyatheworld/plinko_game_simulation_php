@@ -2,7 +2,7 @@
 
 require 'Multipliers.php';
 require 'RandomSequence.php';
-require 'Game1.php';
+require 'Game.php';
 
 $start_level = 7;
 $finish_level = 18;
@@ -16,7 +16,7 @@ for ($lvl = $start_level; $lvl <= $finish_level; $lvl++) {
     echo sprintf("Уровень: %2.0f\n", $lvl);
     echo "Множители  : ";
     $multipliers = new Multipliers($lvl, $top_limit_rtp);
-    foreach ($multipliers->get_multipliers_list() as $mult) {
+    foreach ($multipliers->getMultipliersList() as $mult) {
         echo sprintf("[%5.2f]", $mult);
     }
     echo "\n";
@@ -28,7 +28,7 @@ for ($lvl = $start_level; $lvl <= $finish_level; $lvl++) {
     $total_win = 0;
     $current_rtp = 0;
     for ($i = 0; $i < 3000; $i++) {
-        $game_instance = new Game1($lvl, $multipliers->get_multipliers_list(), $random_sequence->generate_sequence(), $bet);
+        $game_instance = new Game($lvl, $multipliers->getMultipliersList(), $random_sequence->generate_sequence(), $bet);
         $total_win += $game_instance->play_one_game($bet);
         $total_bet += $bet;
         $current_rtp = ($total_win / $total_bet) * 100;
@@ -41,11 +41,11 @@ for ($lvl = $start_level; $lvl <= $finish_level; $lvl++) {
     $current_rtp = 0;
     for ($i = 0; $i < 3000; $i++) {
         if ($current_rtp > $bottom_limit_rtp) {
-            $game_instance = new Game1($lvl, $multipliers->get_multipliers_list(), $random_sequence->generate_special_sequence(), $bet);
+            $game_instance = new Game($lvl, $multipliers->getMultipliersList(), $random_sequence->generate_special_sequence(), $bet);
             $total_win += $game_instance->play_one_game($bet);
             $total_bet += $bet;
         } else {
-            $game_instance = new Game1($lvl, $multipliers->get_multipliers_list(), $random_sequence->generate_sequence(), $bet);
+            $game_instance = new Game($lvl, $multipliers->getMultipliersList(), $random_sequence->generate_sequence(), $bet);
             $total_win += $game_instance->play_one_game($bet);
             $total_bet += $bet;
         }

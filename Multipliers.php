@@ -1,9 +1,4 @@
 <?php
-
-class Multipliers
-{
-
-}
 class Multipliers {
     private $level;
     private $rtp;

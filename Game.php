@@ -1,11 +1,5 @@
 <?php
 
-class Game
-{
-
-}
-
-
 require_once 'RandomSequence.php';
 require_once 'Multipliers.php';
 

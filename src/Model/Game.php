@@ -1,5 +1,5 @@
 <?php
-class Game {
+class Game123 {
     private $data = [
         1 => ['id' => 1, 'name' => 'Иван', 'email' => 'ivan@example.com'],
         2 => ['id' => 2, 'name' => 'Мария', 'email' => 'maria@example.com'],
