@@ -9,4 +9,4 @@ class Game {
         return isset($this->data[$id]) ? $this->data[$id] : null;
     }
 }
-?>
+
