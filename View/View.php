@@ -65,13 +65,13 @@ function render($model, $errors) {
 
     <form method="post" action="">
         <label for="value1">Значение 1:</label>
-        <input type="text" id="value1" name="value1" value="<?php echo htmlspecialchars($model->value1); ?>" required>
+        <input type="text" id="value1" name="value1" value="<?php echo htmlspecialchars($model->return_to_player); ?>" required>
 
         <label for="value2">Значение 2:</label>
-        <input type="text" id="value2" name="value2" value="<?php echo htmlspecialchars($model->value2); ?>" required>
+        <input type="text" id="value2" name="value2" value="<?php echo htmlspecialchars($model->level); ?>" required>
 
         <label for="value3">Значение 3:</label>
-        <input type="text" id="value3" name="value3" value="<?php echo htmlspecialchars($model->value3); ?>" required>
+        <input type="text" id="value3" name="value3" value="<?php echo htmlspecialchars($model->number_of_games); ?>" required>
 
         <button type="submit">Отправить</button>
     </form>
@@ -85,11 +85,11 @@ function render($model, $errors) {
         </ul>
     <?php endif; ?>
 
-    <?php if (!empty($model->value1) || !empty($model->value2) || !empty($model->value3)): ?>
+    <?php if (!empty($model->return_to_player) || !empty($model->level) || !empty($model->number_of_games)): ?>
         <h2>Вы ввели следующие значения:</h2>
-        <p>Значение 1: <?php echo htmlspecialchars($model->value1); ?></p>
-        <p>Значение 2: <?php echo htmlspecialchars($model->value2); ?></p>
-        <p>Значение 3: <?php echo htmlspecialchars($model->value3); ?></p>
+        <p>Значение 1: <?php echo htmlspecialchars($model->return_to_player); ?></p>
+        <p>Значение 2: <?php echo htmlspecialchars($model->level); ?></p>
+        <p>Значение 3: <?php echo htmlspecialchars($model->number_of_games); ?></p>
 
         <!-- Кнопка для перезапуска скрипта -->
         <form method="post" action="">
