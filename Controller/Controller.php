@@ -16,9 +16,9 @@ class Controller {
                 return [new Model(), []]; // Возвращаем пустую модель и пустой массив ошибок
             } else {
                 // Получение значений из формы
-                $model->return_to_player = isset($_POST['value1']) ? htmlspecialchars(trim($_POST['value1'])) : '';
-                $model->level = isset($_POST['value2']) ? htmlspecialchars(trim($_POST['value2'])) : '';
-                $model->number_of_games = isset($_POST['value3']) ? htmlspecialchars(trim($_POST['value3'])) : '';
+                $model->return_to_player = isset($_POST['level']) ? htmlspecialchars(trim($_POST['level'])) : '';
+                $model->level = isset($_POST['TargetRTP']) ? htmlspecialchars(trim($_POST['TargetRTP'])) : '';
+                $model->number_of_games = isset($_POST['number_of_games']) ? htmlspecialchars(trim($_POST['number_of_games'])) : '';
 
                 // Проверка на наличие ошибок
                 if (empty($model->return_to_player)) {
@@ -50,7 +50,7 @@ class Controller {
 
     public function saveResult(Model $model): bool {
         // Подготовка SQL-запроса
-        $stmt = $this->pdo->prepare("INSERT INTO results (RTP, Level, Player, Result) VALUES (?, ?, ?, ?)");
+        $stmt = $this->pdo->prepare("INSERT INTO results (TargetRTP, Level, Player, Result) VALUES (?, ?, ?, ?)");
 
         // Выполнение запроса с параметрами и обработка ошибок
         if (!$stmt->execute([$model->return_to_player, $model->level, $model->number_of_games, $model->result])) {

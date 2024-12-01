@@ -23,33 +23,33 @@ function render($model, $errors) {
                 color: #666;
             }
             form {
-                max-width: 400px;
-                margin: 0 auto;
-                padding: 20px;
+                max-width: 400px; /* Уменьшена ширина формы */
+                margin: 20px auto;
+                padding: 15px; /* Уменьшены отступы */
                 background-color: white;
                 border-radius: 5px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
             label {
                 display: block;
-                margin-bottom: 5px;
+                margin-bottom: 5px; /* Уменьшен отступ */
                 font-weight: bold;
                 color: #333;
             }
-            input[type="text"] {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border-radius: 4px;
-                border: 1px solid #ccc;
+            select, input[type="text"], button {
+                width: calc(100% - 10px); /* Уменьшена ширина */
+                height: 30px; /* Уменьшена высота */
+                font-size: 14px; /* Уменьшен размер шрифта */
+                padding: 3px; /* Уменьшены отступы внутри элемента */
+                border: 1px solid #ccc; /* Граница */
+                border-radius: 5px; /* Закругление углов */
+                margin-bottom: 10px; /* Уменьшен отступ между элементами */
             }
             button {
-                width: 100%;
-                padding: 10px;
                 background-color: #5cb85c;
                 color: white;
                 border: none;
-                border-radius: 4px;
+                cursor: pointer; /* Курсор при наведении */
             }
             button:hover {
                 background-color: #4cae4c; /* Темнее при наведении */
@@ -64,14 +64,34 @@ function render($model, $errors) {
     <p>Пожалуйста, введите три значения ниже:</p>
 
     <form method="post" action="">
-        <label for="value1">Значение 1:</label>
-        <input type="text" id="value1" name="value1" value="<?php echo htmlspecialchars($model->return_to_player); ?>" required>
+        <label for="level">Выберите уровень:</label>
+        <select name="level" id="level">
+            <option value="">-- Выберите --</option> <!-- Пустой вариант по умолчанию -->
+            <?php
+            // Массив значений для выпадающего списка
+            $levels = ['7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'];
+            // Генерация элементов <option> из массива
+            foreach ($levels as $level) {
+                echo "<option value='" . htmlspecialchars($level) . "'>" . htmlspecialchars($level) . "</option>";
+            }
+            ?>
+        </select>
 
-        <label for="value2">Значение 2:</label>
-        <input type="text" id="value2" name="value2" value="<?php echo htmlspecialchars($model->level); ?>" required>
+        <label for="TargetRTP">Выберите RTP:</label>
+        <select name="TargetRTP" id="TargetRTP">
+            <option value="">-- Выберите --</option> <!-- Пустой вариант по умолчанию -->
+            <?php
+            // Массив значений для выпадающего списка RTP
+            $rtpLevels = ['75', '77', '79', '81', '83', '85', '87', '89', '91', '93', '95', '97'];
+            // Генерация элементов <option> из массива
+            foreach ($rtpLevels as $rtp) {
+                echo "<option value='" . htmlspecialchars($rtp) . "'>" . htmlspecialchars($rtp) . "</option>";
+            }
+            ?>
+        </select>
 
-        <label for="value3">Значение 3:</label>
-        <input type="text" id="value3" name="value3" value="<?php echo htmlspecialchars($model->number_of_games); ?>" required>
+        <label for="number_of_games">Количество раундов:</label>
+        <input type="text" id="number_of_games" name="number_of_games" value="<?php echo htmlspecialchars($model->number_of_games); ?>" required>
 
         <button type="submit">Отправить</button>
     </form>
@@ -80,16 +100,16 @@ function render($model, $errors) {
         <h2>Ошибки:</h2>
         <ul class="error-message">
             <?php foreach ($errors as $error): ?>
-                <li><?php echo $error; ?></li>
+                <li><?php echo htmlspecialchars($error); ?></li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
 
     <?php if (!empty($model->return_to_player) || !empty($model->level) || !empty($model->number_of_games)): ?>
         <h2>Вы ввели следующие значения:</h2>
-        <p>Значение 1: <?php echo htmlspecialchars($model->return_to_player); ?></p>
-        <p>Значение 2: <?php echo htmlspecialchars($model->level); ?></p>
-        <p>Значение 3: <?php echo htmlspecialchars($model->number_of_games); ?></p>
+        <p>Значение RTP: <?php echo htmlspecialchars($model->return_to_player); ?></p>
+        <p>Выбранный уровень: <?php echo htmlspecialchars($model->level); ?></p>
+        <p>Количество игр: <?php echo htmlspecialchars($model->number_of_games); ?></p>
 
         <!-- Кнопка для перезапуска скрипта -->
         <form method="post" action="">

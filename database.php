@@ -5,7 +5,6 @@ $user = 'root';
 $pass = 'root';
 $charset = 'utf8mb4';
 
-$dsn = "mysql:host=$host;charset=$charset"; // Подключение без указания базы данных
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -14,43 +13,75 @@ $options = [
 
 try {
     // Подключение к серверу MySQL
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo = new PDO("mysql:host=$host;charset=$charset", $user, $pass, $options);
 
     // Проверка наличия базы данных
-    $stmt = $pdo->query("SHOW DATABASES LIKE '$db'");
-    if ($stmt->rowCount() == 0) {
-        // Если база данных не существует, создаем её
-        $pdo->exec("CREATE DATABASE `$db`");
-        echo "База данных '$db' успешно создана.<br>";
-    } else {
-        echo "База данных '$db' уже существует.<br>";
+    if (!databaseExists($pdo, $db)) {
+        createDatabase($pdo, $db);
     }
 
     // Подключаемся к базе данных
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset"; // Обновляем DSN для подключения к базе данных
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo->exec("USE `$db`");
 
     // Проверка наличия таблицы
-    $tableName = 'results';
-    $stmt = $pdo->query("SHOW TABLES LIKE '$tableName'");
+    if (!tableExists($pdo, 'results')) {
+        createTable($pdo);
+    } else {
+        // Опция очистки таблицы перед использованием
+        clearTable($pdo, 'results');
+    }
+} catch (\PDOException $e) {
+    die("Ошибка подключения: " . $e->getMessage());
+}
 
-    if ($stmt->rowCount() == 0) {
-        // Если таблица не существует, создаем её
+// Функция для проверки существования базы данных
+function databaseExists($pdo, $dbName) {
+    $stmt = $pdo->query("SHOW DATABASES LIKE '$dbName'");
+    return $stmt->rowCount() > 0;
+}
+
+// Функция для создания базы данных
+function createDatabase($pdo, $dbName) {
+    try {
+        $pdo->exec("CREATE DATABASE `$dbName`");
+    } catch (\PDOException $e) {
+        die("Ошибка при создании базы данных: " . $e->getMessage());
+    }
+}
+
+// Функция для проверки существования таблицы
+function tableExists($pdo, $tableName) {
+    $stmt = $pdo->query("SHOW TABLES LIKE '$tableName'");
+    return $stmt->rowCount() > 0;
+}
+
+// Функция для создания таблицы
+function createTable($pdo) {
+    try {
         $createTableSQL = "CREATE TABLE results (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            RTP DECIMAL(10, 2),
-            Level DECIMAL(10, 2),
-            Player DECIMAL(10, 2),
-            Result DECIMAL(10, 2)
+            Created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            Player VARCHAR(15),
+            Bet INT,
+            RND JSON,
+            TargetRTP DECIMAL(5, 2),
+            Level TINYINT,
+            Result TINYINT,
+            ActualRTP DECIMAL(5, 2)
         )";
 
         $pdo->exec($createTableSQL);
-        echo "Таблица '$tableName' успешно создана.";
-    } else {
-        echo "Таблица '$tableName' уже существует.";
+    } catch (\PDOException $e) {
+        die("Ошибка при создании таблицы: " . $e->getMessage());
     }
-} catch (\PDOException $e) {
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-
+// Функция для очистки таблицы
+function clearTable($pdo, $tableName) {
+    try {
+        $pdo->exec("TRUNCATE TABLE `$tableName`");
+    } catch (\PDOException $e) {
+        die("Ошибка при очистке таблицы: " . $e->getMessage());
+    }
+}
+?>
