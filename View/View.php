@@ -7,57 +7,9 @@ function render($model, $errors) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Форма ввода значений</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                padding: 20px;
-                margin: 0;
-            }
-            h1 {
-                text-align: center;
-                color: #333;
-            }
-            p {
-                text-align: center;
-                color: #666;
-            }
-            form {
-                max-width: 400px; /* Уменьшена ширина формы */
-                margin: 20px auto;
-                padding: 15px; /* Уменьшены отступы */
-                background-color: white;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            label {
-                display: block;
-                margin-bottom: 5px; /* Уменьшен отступ */
-                font-weight: bold;
-                color: #333;
-            }
-            select, input[type="text"], button {
-                width: calc(100% - 10px); /* Уменьшена ширина */
-                height: 30px; /* Уменьшена высота */
-                font-size: 14px; /* Уменьшен размер шрифта */
-                padding: 3px; /* Уменьшены отступы внутри элемента */
-                border: 1px solid #ccc; /* Граница */
-                border-radius: 5px; /* Закругление углов */
-                margin-bottom: 10px; /* Уменьшен отступ между элементами */
-            }
-            button {
-                background-color: #5cb85c;
-                color: white;
-                border: none;
-                cursor: pointer; /* Курсор при наведении */
-            }
-            button:hover {
-                background-color: #4cae4c; /* Темнее при наведении */
-            }
-            .error-message {
-                color: red; /* Цвет сообщений об ошибках */
-            }
-        </style>
+
+        <!-- Подключение CSS-файла -->
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
     <h1>Приглашение ввести значения</h1>
@@ -97,12 +49,14 @@ function render($model, $errors) {
     </form>
 
     <?php if (!empty($errors)): ?>
-        <h2>Ошибки:</h2>
-        <ul class="error-message">
-            <?php foreach ($errors as $error): ?>
-                <li><?php echo htmlspecialchars($error); ?></li>
-            <?php endforeach; ?>
-        </ul>
+        <div class="error-message">
+            <h2>Ошибки:</h2>
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     <?php endif; ?>
 
     <?php if (!empty($model->return_to_player) || !empty($model->level) || !empty($model->number_of_games)): ?>
@@ -118,7 +72,7 @@ function render($model, $errors) {
     $db = 'plinko';           // Имя базы данных
     $user = 'root';          // Имя пользователя
     $pass = 'root';          // Пароль
-    $charset = 'utf8mb4';    // Кодировка
+    $charset = 'utf8mb4';     // Кодировка
 
     $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -139,20 +93,8 @@ function render($model, $errors) {
         // Проверка наличия данных
         if (count($results) > 0) {
             // Начало HTML-таблицы
-            echo "<table border='1' style='border-collapse: collapse; width: 100%;'>";
-            echo "<thead>";
-            echo "<tr>";
-            echo "<th>ID</th>";
-            echo "<th>Created At</th>";
-            echo "<th>Player</th>";
-            echo "<th>Bet</th>";
-            echo "<th>RND</th>";
-            echo "<th>Target RTP</th>";
-            echo "<th>Level</th>";
-            echo "<th>Result</th>";
-            echo "<th>Actual RTP</th>";
-            echo "</tr>";
-            echo "</thead>";
+            echo "<table>";
+            echo "<thead><tr><th>ID</th><th>Created At</th><th>Player</th><th>Bet</th><th>RND</th><th>Target RTP</th><th>Level</th><th>Result</th><th>Actual RTP</th></tr></thead>";
             echo "<tbody>";
 
             // Вывод данных в таблицу
@@ -171,8 +113,7 @@ function render($model, $errors) {
             }
 
             // Закрытие таблицы
-            echo "</tbody>";
-            echo "</table>";
+            echo "</tbody></table>";
 
         } else {
             // Если таблица пуста
@@ -197,16 +138,10 @@ function render($model, $errors) {
 // Обработка сброса таблицы при отправке формы
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset'])) {
     try {
-        // Подключение к серверу MySQL
         $pdo = new PDO("mysql:host=$host;dbname=$db;charset=$charset", $user, $pass, $options);
-
-        // Очистка таблицы results
         $pdo->exec("TRUNCATE TABLE results");
-
-        // Перенаправление на ту же страницу после сброса (чтобы избежать повторной отправки формы)
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
-
     } catch (\PDOException $e) {
         die("Ошибка подключения при сбросе таблицы: " . $e->getMessage());
     }
