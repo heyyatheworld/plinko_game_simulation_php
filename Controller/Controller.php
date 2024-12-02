@@ -36,7 +36,7 @@ class Controller {
                     $model->calculate();
                     try {
                         if ($this->saveResult($model)) { // Используем сохраненный объект PDO
-                            echo "Результат успешно сохранен.";
+//                            echo "Результат успешно сохранен.";
                         }
                     } catch (Exception $e) {
                         echo "Ошибка при сохранении результата: " . $e->getMessage();

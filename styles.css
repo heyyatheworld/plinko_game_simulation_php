@@ -5,75 +5,92 @@ body {
     margin: 0;
     line-height: 1.6;
 }
-h1, h2 {
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px; /* Добавлен отступ снизу */
+}
+
+h2 {
     text-align: center;
     color: #333;
 }
+
 p {
     text-align: center;
     color: #666;
 }
+
 form {
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Увеличен радиус тени */
 }
+
 label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
 }
+
 select, input[type="text"], button {
-    width: 100%;
-    padding: 8px;
+    width: calc(100% - 16px); /* Уменьшена ширина для учета отступов */
+    padding: 10px; /* Увеличены отступы для удобства ввода */
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Учитывает границы и отступы в ширине */
 }
+
 button {
     background-color: #5cb85c;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 12px; /* Увеличены отступы для кнопки */
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s; /* Добавлен эффект трансформации */
 }
+
 button:hover {
-    background-color: #4cae4c;
+    background-color: #4cae4c; /* Темнее при наведении */
+    transform: scale(1.05); /* Увеличение кнопки при наведении */
 }
+
 .error-message {
-    color: #d9534f;
-    background-color: #f2dede;
-    border: 1px solid #ebccd1;
+    color: #d9534f; /* Цвет текста ошибок */
+    background-color: #f2dede; /* Фон ошибок */
+    border: 1px solid #ebccd1; /* Граница ошибок */
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 20px;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 th, td {
     text-align: left;
     padding: 12px;
-    border-bottom: 1px solid #ddd;
 }
+
 th {
     background-color: #4CAF50;
     color: white;
 }
+
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
 tr:hover {
     background-color: #ddd;
 }

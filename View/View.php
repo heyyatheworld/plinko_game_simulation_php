@@ -6,9 +6,7 @@ function render($model, $errors) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Форма ввода значений</title>
-
-        <!-- Подключение CSS-файла -->
+        <title>Plinko</title>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
@@ -85,7 +83,7 @@ function render($model, $errors) {
         $pdo = new PDO("mysql:host=$host;dbname=$db;charset=$charset", $user, $pass, $options);
 
         // Выполнение SQL-запроса для получения данных
-        $stmt = $pdo->query("SELECT * FROM results");
+        $stmt = $pdo->query("SELECT * FROM results ORDER BY id DESC LIMIT 20");
 
         // Получение всех строк результата
         $results = $stmt->fetchAll();
