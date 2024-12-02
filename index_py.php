@@ -29,7 +29,7 @@ for ($lvl = $start_level; $lvl <= $finish_level; $lvl++) {
     $total_win = 0;
     $current_rtp = 0;
     for ($i = 0; $i < 3000; $i++) {
-        $game_instance = new Game($lvl, $multipliers->getMultipliersList(), $random_sequence->generate_sequence(), $bet);
+        $game_instance = new Game($lvl, $multipliers->getMultipliersList(), $random_sequence->get_sequence(), $bet);
         $total_win += $game_instance->play_one_game($bet);
         $total_bet += $bet;
         $current_rtp = ($total_win / $total_bet) * 100;
@@ -42,11 +42,11 @@ for ($lvl = $start_level; $lvl <= $finish_level; $lvl++) {
     $current_rtp = 0;
     for ($i = 0; $i < 3000; $i++) {
         if ($current_rtp > $bottom_limit_rtp) {
-            $game_instance = new Game($lvl, $multipliers->getMultipliersList(), $random_sequence->generate_special_sequence(), $bet);
+            $game_instance = new Game($lvl, $multipliers->getMultipliersList(), $random_sequence->set_sp_sequence(), $bet);
             $total_win += $game_instance->play_one_game($bet);
             $total_bet += $bet;
         } else {
-            $game_instance = new Game($lvl, $multipliers->getMultipliersList(), $random_sequence->generate_sequence(), $bet);
+            $game_instance = new Game($lvl, $multipliers->getMultipliersList(), $random_sequence->get_sequence(), $bet);
             $total_win += $game_instance->play_one_game($bet);
             $total_bet += $bet;
         }
