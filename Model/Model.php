@@ -1,17 +1,16 @@
 <?php
-require_once '../RandSeq.php';
-require_once '../Multipliers.php';
 class Model {
     public float $target_rtp;
     public int $level;
     public float $result;
     public array $random_sequence;
     public array $multipliers;
-   // public float $result;
+    public int $number_of_games;
 
-    public function __construct($target_rtp = 0, $level = 0) {
+    public function __construct($target_rtp = 0, $level = 0, $number_of_games = 0) {
         $this->target_rtp = $target_rtp;
         $this->level = $level;
+        $this->number_of_games = $number_of_games;
         $this->result = 0;
     }
 

@@ -10,7 +10,7 @@ class Controller {
         $model = new Model();
         $errors = [];
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['reset'])) {
                 // Сброс значений
                 return [new Model(), []]; // Возвращаем пустую модель и пустой массив ошибок
@@ -31,6 +31,7 @@ class Controller {
                     $errors[] = 'Значение 3 не должно быть пустым.';
                 }
 
+                for($i = 0; $i < $model->number_of_games; $i++) {
                 // Если нет ошибок, вычисляем результат и сохраняем его
                 if (empty($errors)) {
                     $model->calculate_round();
@@ -41,6 +42,7 @@ class Controller {
                     } catch (Exception $e) {
                         echo "Ошибка при сохранении результата: " . $e->getMessage();
                     }
+                }
                 }
             }
         }

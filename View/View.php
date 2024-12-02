@@ -35,7 +35,7 @@ function render($model, $errors) {
             $rtpLevels = ['75', '77', '79', '81', '83', '85', '87', '89', '91', '93', '95', '97'];
             // Генерация элементов <option> из массива
             foreach ($rtpLevels as $rtp) {
-                echo "<option value='" . htmlspecialchars($rtp) . "'" . ($model->return_to_player == $rtp ? " selected" : "") . ">" . htmlspecialchars($rtp) . "</option>";
+                echo "<option value='" . htmlspecialchars($rtp) . "'" . ($model->target_rtp == $rtp ? " selected" : "") . ">" . htmlspecialchars($rtp) . "</option>";
             }
             ?>
         </select>
@@ -57,10 +57,10 @@ function render($model, $errors) {
         </div>
     <?php endif; ?>
 
-    <?php if (!empty($model->return_to_player) || !empty($model->level) || !empty($model->number_of_games)): ?>
+    <?php if (!empty($model->target_rtp) || !empty($model->level) || !empty($model->number_of_games)): ?>
         <h2>Вы ввели следующие значения:</h2>
         <p>Выбранный уровень: <?php echo htmlspecialchars($model->level); ?></p>
-        <p>Значение RTP: <?php echo htmlspecialchars($model->return_to_player); ?></p>
+        <p>Значение RTP: <?php echo htmlspecialchars($model->target_rtp); ?></p>
         <p>Количество игр: <?php echo htmlspecialchars($model->number_of_games); ?></p>
     <?php endif; ?>
 
@@ -134,7 +134,7 @@ function render($model, $errors) {
 }
 
 // Обработка сброса таблицы при отправке формы
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset'])) {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset'])) {
     try {
         $pdo = new PDO("mysql:host=$host;dbname=$db;charset=$charset", $user, $pass, $options);
         $pdo->exec("TRUNCATE TABLE results");

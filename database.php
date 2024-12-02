@@ -61,13 +61,10 @@ function createTable($pdo) {
         $createTableSQL = "CREATE TABLE results (
             id INT AUTO_INCREMENT PRIMARY KEY,
             Created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            Player VARCHAR(15),
-            Bet INT,
-            RND JSON,
-            TargetRTP DECIMAL(5, 2),
             Level TINYINT,
-            Result TINYINT,
-            ActualRTP DECIMAL(5, 2)
+            TargetRTP TINYINT,
+            Bet INT,
+            Result FLOAT,
         )";
 
         $pdo->exec($createTableSQL);
