@@ -6,7 +6,7 @@ require_once 'database.php';
 require_once 'Controller/Controller.php';
 require_once 'Model/Model.php';
 require_once 'View/View.php';
-require_once 'RandomSequence.php';
+require_once 'RandSeq.php';
 require_once 'Multipliers.php';
 
 // Создаем экземпляр контроллера

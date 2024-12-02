@@ -17,11 +17,11 @@ class Controller {
             } else {
                 // Получение значений из формы
                 $model->level = isset($_POST['level']) ? htmlspecialchars(trim($_POST['level'])) : '';
-                $model->return_to_player = isset($_POST['TargetRTP']) ? htmlspecialchars(trim($_POST['TargetRTP'])) : '';
+                $model->target_rtp = isset($_POST['TargetRTP']) ? htmlspecialchars(trim($_POST['TargetRTP'])) : '';
                 $model->number_of_games = isset($_POST['number_of_games']) ? htmlspecialchars(trim($_POST['number_of_games'])) : '';
 
                 // Проверка на наличие ошибок
-                if (empty($model->return_to_player)) {
+                if (empty($model->target_rtp)) {
                     $errors[] = 'Значение 1 не должно быть пустым.';
                 }
                 if (empty($model->level)) {
@@ -33,7 +33,7 @@ class Controller {
 
                 // Если нет ошибок, вычисляем результат и сохраняем его
                 if (empty($errors)) {
-                    $model->calculate();
+                    $model->calculate_round();
                     try {
                         if ($this->saveResult($model)) { // Используем сохраненный объект PDO
 //                            echo "Результат успешно сохранен.";
@@ -53,7 +53,7 @@ class Controller {
         $stmt = $this->pdo->prepare("INSERT INTO results (TargetRTP, Level, Player, Result) VALUES (?, ?, ?, ?)");
 
         // Выполнение запроса с параметрами и обработка ошибок
-        if (!$stmt->execute([$model->return_to_player, $model->level, $model->number_of_games, $model->result])) {
+        if (!$stmt->execute([$model->target_rtp, $model->level, $model->number_of_games, $model->result])) {
             throw new Exception("Ошибка при сохранении результата: " . implode(", ", $stmt->errorInfo()));
         }
 

@@ -1,43 +1,44 @@
 <?php
+require_once '../RandSeq.php';
+require_once '../Multipliers.php';
 class Model {
-    public float $return_to_player;
+    public float $target_rtp;
     public int $level;
-    public int $number_of_games;
     public float $result;
+    public array $random_sequence;
+    public array $multipliers;
+   // public float $result;
 
-    public function __construct($return_to_player = 0, $level = 0, $number_of_games = 0) {
-        $this->return_to_player = $return_to_player;
+    public function __construct($target_rtp = 0, $level = 0) {
+        $this->target_rtp = $target_rtp;
         $this->level = $level;
-        $this->number_of_games = $number_of_games;
+        $this->result = 0;
     }
 
-    public function calculate() {
+    public function calculate_round() {
         // Здесь можно добавить логику для вычисления результата
         // Например, сложение значений
         //$this->result = $this->return_to_player + $this->level + $this->number_of_games; // Пример
+        $this->get_random_sequence();
+        $this->get_multipliers();
         $this->result = $this->play_one_game(1);
     }
 
-    public function get_random_sequence(): array {
+    public function get_random_sequence() {
         $rs = new RandomSequence($this->level);
-        $rs_array = $rs->get_sequence();
+        $this->random_sequence = $rs->get_sequence();
         echo "Сгенерирована последовательность: ";
-        print_r($rs_array);
-        echo "<br />";
-        return $rs_array;
+        print_r($this->random_sequence);
     }
 
-    public function get_multipliers(): array {
-        $ms = new Multipliers($this->level, $this->return_to_player);
-        $ms_array = $ms->get_multipliers();
-        echo "Сгенерированы множители: ";
-        print_r($ms_array);
-        echo "<br />";
-        return $ms_array;
+    public function get_multipliers() {
+        $ms = new Multipliers($this->level, $this->target_rtp);
+        $this->multipliers = $ms->get_multipliers();
+        echo "Сгенерированы мультики: ";
+        print_r($this->multipliers);
     }
 
     public function move_one_level_down($level, $index, $number_from_sequence): array{
-
         if ($number_from_sequence < 0) {
             // Двигаемся влево
             $new_index = max($index, 0);  // Убедимся, что индекс не выходит за пределы
@@ -57,8 +58,8 @@ class Model {
         $level = 0;
         $index = 0;
         for ($i = 0; $i < $this->level; $i++) {
-            list($level, $index) = $this->move_one_level_down($level, $index, $this->get_random_sequence()[$i]);
+            list($level, $index) = $this->move_one_level_down($level, $index, $this->random_sequence[$i]);
         }
-        return $bet * $this->get_multipliers()[$index];
+        return $bet * $this->multipliers[$index];
     }
 }
