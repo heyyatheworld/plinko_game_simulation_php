@@ -29,7 +29,7 @@ class Model {
 
     public function get_multipliers(): array {
         $ms = new Multipliers($this->level, $this->return_to_player);
-        $ms_array = $ms->getMultipliersList();
+        $ms_array = $ms->get_multipliers();
         echo "Сгенерированы множители: ";
         print_r($ms_array);
         echo "<br />";

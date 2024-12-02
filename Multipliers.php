@@ -1,13 +1,22 @@
 <?php
 class Multipliers {
-    private $level;
-    private $rtp;
-    private $progress;
+    private int $level;
+    private float $target_rtp;
+    private float $actual_rtp;
+    private float $progress;
+    private array $probabilities;
+    private array $multipliers;
 
     public function __construct(int $level, float $rtp) {
         $this->level = $level;
-        $this->rtp = $rtp;
-        $this->progress = 1.618; // Значение прогрессии
+        $this->target_rtp = $rtp;
+        $this->actual_rtp = 0;
+        $this->progress = 5; // Значение прогрессии
+        $this->probabilities = [];
+        $this->multipliers = [];
+        $this->calculateProbabilities();
+        $this->calculateMultipliers();
+        $this->checkCondition();
     }
 
     private static function factorial(int $num): int {
@@ -35,7 +44,7 @@ class Multipliers {
         return $integerPart + $roundedFraction;
     }
 
-    public function calculateProbabilities(): array {
+    private function calculateProbabilities() {
         $level = $this->level + 1; // Увеличиваем уровень на 1 для создания списка
         $probs = array_fill(0, $level, 0.0);
         $binomials = array_fill(0, $level, 0);
@@ -52,11 +61,13 @@ class Multipliers {
         for ($j = 0; $j < $level; $j++) {
             $probs[$j] = $binomials[$j] / $totalBinomials;
         }
+        $this->probabilities = $probs;
 
-        return $probs;
+        $resultString = implode(" , ", $this->probabilities);
+        #print("Вероятности: " . $resultString . "\n");
     }
 
-    public function calculateMultipliers(): array {
+    private function calculateMultipliers() {
         $level = $this->level + 1; // Увеличиваем уровень на 1 для создания списка
         $result = array_fill(0, $level, 0.5);
         $n = count($result);
@@ -83,44 +94,62 @@ class Multipliers {
         }, $result);
         $result = array_map([$this, 'roundToNearestFive'], $result);
 
-        return $result;
+        $this->multipliers = $result;
+        $this->calculateRtp();
+        $resultString = implode(" , ", $this->multipliers);
     }
 
-    public function calculateRtp(): float {
-        $multipliers = $this->calculateMultipliers();
-        $probs = $this->calculateProbabilities();
+    private function calculateRtp() {
+
+        $probs = $this->probabilities;
+        $mults = $this->multipliers;
 
         // Применяем вероятности к структуре (умножаем)
         $weightedResults = array_map(function($m, $p) {
             return $m * $p;
-        }, $multipliers, $probs);
+        }, $mults, $probs);
 
-        $result = array_sum($weightedResults) * 100;
+        $this->actual_rtp = array_sum($weightedResults) * 100;
 
-        return $result;
     }
 
-    public function checkCondition(): array {
-        $currentResult = $this->calculateRtp();
+    public function checkCondition() {
+        // Проверяем, нужно ли уменьшать или увеличивать прогресс
 
-        if ($currentResult > $this->rtp) {
-            while ($currentResult > $this->rtp) {
-                $this->progress -= 0.01;
-                $currentResult = $this->calculateRtp();
+        $step = 0.01;
+        while (abs($this->actual_rtp - $this->target_rtp) > 10) {
+            // Устанавливаем шаг изменения прогресса
+            if ($this->actual_rtp > $this->target_rtp) {
+                $this->progress -= $step;
             }
-        } else {
-            while ($currentResult < $this->rtp) {
-                $this->progress += 0.01;
-                $currentResult = $this->calculateRtp();
-            }
+            else{
+                    $this->progress += $step;
+                }
+            $this->calculateMultipliers();
+            $this->calculateRtp();
         }
-
-        // Вывод результатов
-        $multipliers = $this->calculateMultipliers();
-        return $multipliers;
+        $resultString = implode(" , ", $this->multipliers);
+//        print("Новые множители: " . $resultString . "\n");
     }
 
-    public function getMultipliersList(): array {
-        return $this->checkCondition();
+    public function get_multipliers(): array {
+        return $this->multipliers;
+    }
+    public function get_actual_rtp(): float {
+        return round($this->actual_rtp,2);
+    }
+    public function get_target_rtp(): float {
+        return round($this->target_rtp,2);
     }
 }
+
+//for ($i=2; $i<20; $i++){
+//    print("\n");
+//    print("Уровень: " . $i . "\n");
+//    $mults = new Multipliers($i, 95);
+//    $resultString = implode(" , ", $mults->get_multipliers());
+//    print("Множители: " . $resultString . "\n");
+//    print("Текущий RTP: " . round($mults->get_actual_rtp(), 2). "\n");
+//    print("Целевой RTP: " . round($mults->get_target_rtp(),2). "\n");
+//    readline();
+//}
