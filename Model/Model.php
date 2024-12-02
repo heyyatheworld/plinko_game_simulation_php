@@ -1,40 +1,38 @@
 <?php
 class Model {
-    public float $target_rtp;
     public int $level;
+    public float $target_rtp;
+    public int $bet;
     public float $result;
     public array $random_sequence;
     public array $multipliers;
     public int $number_of_games;
 
-    public function __construct($target_rtp = 0, $level = 0, $number_of_games = 0) {
+    public function __construct($target_rtp = 0, $level = 0, $number_of_games = 0)
+    {
         $this->target_rtp = $target_rtp;
         $this->level = $level;
         $this->number_of_games = $number_of_games;
         $this->result = 0;
+        $this->bet = 1;
     }
-
     public function calculate_round() {
         // Здесь можно добавить логику для вычисления результата
         // Например, сложение значений
         //$this->result = $this->return_to_player + $this->level + $this->number_of_games; // Пример
         $this->get_random_sequence();
         $this->get_multipliers();
-        $this->result = $this->play_one_game(1);
+        $this->result = $this->play_one_game($this->bet);
     }
 
     public function get_random_sequence() {
         $rs = new RandomSequence($this->level);
         $this->random_sequence = $rs->get_sequence();
-        echo "Сгенерирована последовательность: ";
-        print_r($this->random_sequence);
     }
 
     public function get_multipliers() {
         $ms = new Multipliers($this->level, $this->target_rtp);
         $this->multipliers = $ms->get_multipliers();
-        echo "Сгенерированы мультики: ";
-        print_r($this->multipliers);
     }
 
     public function move_one_level_down($level, $index, $number_from_sequence): array{

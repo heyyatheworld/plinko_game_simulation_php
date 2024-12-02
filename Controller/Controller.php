@@ -52,10 +52,11 @@ class Controller {
 
     public function saveResult(Model $model): bool {
         // Подготовка SQL-запроса
-        $stmt = $this->pdo->prepare("INSERT INTO results (TargetRTP, Level, Player, Result) VALUES (?, ?, ?, ?)");
+//        $stmt = $this->pdo->prepare("INSERT INTO results (TargetRTP, Level, Player, Result) VALUES (?, ?, ?, ?)");
+        $stmt = $this->pdo->prepare("INSERT INTO results (Level, TargetRTP, Bet, Result) VALUES (?, ?, ?, ?)");
 
         // Выполнение запроса с параметрами и обработка ошибок
-        if (!$stmt->execute([$model->target_rtp, $model->level, $model->number_of_games, $model->result])) {
+        if (!$stmt->execute([$model->level, $model->target_rtp, $model->bet, $model->result])) {
             throw new Exception("Ошибка при сохранении результата: " . implode(", ", $stmt->errorInfo()));
         }
 

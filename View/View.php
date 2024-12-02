@@ -92,7 +92,7 @@ function render($model, $errors) {
         if (count($results) > 0) {
             // Начало HTML-таблицы
             echo "<table>";
-            echo "<thead><tr><th>ID</th><th>Created At</th><th>Player</th><th>Bet</th><th>RND</th><th>Target RTP</th><th>Level</th><th>Result</th><th>Actual RTP</th></tr></thead>";
+            echo "<thead><tr><th>ID</th><th>Created At</th><th>Level</th><th>Target RTP</th><th>Bet</th><th>Result</th></tr></thead>";
             echo "<tbody>";
 
             // Вывод данных в таблицу
@@ -100,13 +100,10 @@ function render($model, $errors) {
                 echo "<tr>";
                 echo "<td>{$row['id']}</td>";
                 echo "<td>{$row['Created_at']}</td>";
-                echo "<td>{$row['Player']}</td>";
-                echo "<td>{$row['Bet']}</td>";
-                echo "<td>" . json_encode($row['RND']) . "</td>"; // Преобразование JSON в строку для отображения
-                echo "<td>{$row['TargetRTP']}</td>";
                 echo "<td>{$row['Level']}</td>";
+                echo "<td>{$row['TargetRTP']}</td>";
+                echo "<td>{$row['Bet']}</td>";
                 echo "<td>{$row['Result']}</td>";
-                echo "<td>{$row['ActualRTP']}</td>";
                 echo "</tr>";
             }
 

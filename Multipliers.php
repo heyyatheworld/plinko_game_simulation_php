@@ -62,9 +62,6 @@ class Multipliers {
             $probs[$j] = $binomials[$j] / $totalBinomials;
         }
         $this->probabilities = $probs;
-
-        $resultString = implode(" , ", $this->probabilities);
-        #print("Вероятности: " . $resultString . "\n");
     }
 
     private function calculateMultipliers() {
@@ -96,7 +93,6 @@ class Multipliers {
 
         $this->multipliers = $result;
         $this->calculateRtp();
-        $resultString = implode(" , ", $this->multipliers);
     }
 
     private function calculateRtp() {
@@ -128,8 +124,6 @@ class Multipliers {
             $this->calculateMultipliers();
             $this->calculateRtp();
         }
-        $resultString = implode(" , ", $this->multipliers);
-//        print("Новые множители: " . $resultString . "\n");
     }
 
     public function get_multipliers(): array {
@@ -142,14 +136,3 @@ class Multipliers {
         return round($this->target_rtp,2);
     }
 }
-
-//for ($i=2; $i<20; $i++){
-//    print("\n");
-//    print("Уровень: " . $i . "\n");
-//    $mults = new Multipliers($i, 95);
-//    $resultString = implode(" , ", $mults->get_multipliers());
-//    print("Множители: " . $resultString . "\n");
-//    print("Текущий RTP: " . round($mults->get_actual_rtp(), 2). "\n");
-//    print("Целевой RTP: " . round($mults->get_target_rtp(),2). "\n");
-//    readline();
-//}
