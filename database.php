@@ -28,7 +28,7 @@ try {
         createTable($pdo);
     } else {
         // Опция очистки таблицы перед использованием
-        clearTable($pdo, 'results');
+        //clearTable($pdo, 'results');
     }
 } catch (\PDOException $e) {
     die("Ошибка подключения: " . $e->getMessage());

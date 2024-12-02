@@ -16,8 +16,8 @@ class Controller {
                 return [new Model(), []]; // Возвращаем пустую модель и пустой массив ошибок
             } else {
                 // Получение значений из формы
-                $model->return_to_player = isset($_POST['level']) ? htmlspecialchars(trim($_POST['level'])) : '';
-                $model->level = isset($_POST['TargetRTP']) ? htmlspecialchars(trim($_POST['TargetRTP'])) : '';
+                $model->level = isset($_POST['level']) ? htmlspecialchars(trim($_POST['level'])) : '';
+                $model->return_to_player = isset($_POST['TargetRTP']) ? htmlspecialchars(trim($_POST['TargetRTP'])) : '';
                 $model->number_of_games = isset($_POST['number_of_games']) ? htmlspecialchars(trim($_POST['number_of_games'])) : '';
 
                 // Проверка на наличие ошибок
