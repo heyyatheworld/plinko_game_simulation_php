@@ -43,7 +43,7 @@ function render($model, $errors, $pdo) {
                 </select>
 
                 <label for="number_of_games">Количество раундов:</label>
-                    <input type="text" id="number_of_games" name="number_of_games" value="1" required>
+                    <input type="text" id="number_of_games" name="number_of_games" value="5000" required>
                 <button type="submit">Отправить</button>
             </form>
 
@@ -90,7 +90,7 @@ function render($model, $errors, $pdo) {
             <div class="top-right-right-container">
                 <?php if (!empty($model->target_rtp) || !empty($model->number_of_games)): ?>
                     <p style="text-align: center; font-size: 24px;">
-                        RTP: <?php echo htmlspecialchars(number_format($model->actual_rtp, 2)); ?>%
+                        RTP: <?php echo htmlspecialchars(number_format($model->actual_rtime_rtp, 2)); ?>%
                     </p>
                 <?php endif; ?>
             </div>

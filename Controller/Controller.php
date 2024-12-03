@@ -47,7 +47,7 @@ class Controller {
                     }
                 }
                 }
-                $model->actual_rtp = $this->get_total_results($model)/$this->get_total_bets($model);
+                $model->actual_rtime_rtp = $this->get_total_results($model)/$this->get_total_bets($model)*100;
             }
         }
         return [$model, $errors];

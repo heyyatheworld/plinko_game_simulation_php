@@ -8,18 +8,21 @@ class Model {
     public array $random_sequence;
     public array $multipliers;
     public int $number_of_games;
+    public float $actual_rtime_rtp;
 
     public function __construct($target_rtp = 0, $level = 0, $number_of_games = 0)
     {
         $this->target_rtp = $target_rtp;
+        $this->actual_rtp = 0;
         $this->level = $level;
         $this->number_of_games = $number_of_games;
         $this->result = 0;
         $this->bet = 1;
         $this->random_sequence = [];
         $this->multipliers = [];
+        $this->actual_rtime_rtp = 0;
 //      $this->number_of_random = 0;
-        $this->actual_rtp = 0;
+
     }
     public function calculate_round() {
         // Здесь можно добавить логику для вычисления результата

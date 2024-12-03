@@ -7,13 +7,15 @@ class Multipliers {
     private array $probabilities;
     private array $multipliers;
 
+
     public function __construct(int $level, float $rtp) {
         $this->level = $level;
         $this->target_rtp = $rtp;
         $this->actual_rtp = 0;
-        $this->progress = 5; // Значение прогрессии
+        $this->progress = 2.625; // Значение прогрессии
         $this->probabilities = [];
         $this->multipliers = [];
+
         $this->calculateProbabilities();
         $this->calculateMultipliers();
         $this->checkCondition();
@@ -48,16 +50,10 @@ class Multipliers {
         $level = $this->level + 1; // Увеличиваем уровень на 1 для создания списка
         $probs = array_fill(0, $level, 0.0);
         $binomials = array_fill(0, $level, 0);
-
-        // Вычисление биномиальных коэффициентов
         for ($i = 0; $i < $level; $i++) {
             $binomials[$i] = self::calculateBinomialCoefficient($level - 1, $i);
         }
-
-        // Сумма всех биномиальных коэффициентов
         $totalBinomials = array_sum($binomials);
-
-        // Вычисление вероятностей
         for ($j = 0; $j < $level; $j++) {
             $probs[$j] = $binomials[$j] / $totalBinomials;
         }
@@ -65,21 +61,16 @@ class Multipliers {
     }
 
     private function calculateMultipliers() {
-        $level = $this->level + 1; // Увеличиваем уровень на 1 для создания списка
+        $level = $this->level + 1;
         $result = array_fill(0, $level, 0.5);
         $n = count($result);
-
-        // Середина массива мультипликаторов
         $midIndex = intdiv($n, 2);
-
-        // Обработка четного количества элементов
         if ($n % 2 === 0) {
             for ($i = 1; $i < $n / 2; $i++) {
                 $result[$midIndex - 1 - $i] = $result[$midIndex - $i] * $this->progress;
                 $result[$midIndex + $i] = $result[$midIndex + $i - 1] * $this->progress;
             }
         } else {
-            // Обработка нечетного количества элементов
             for ($i = 1; $i <= intdiv($n, 2); $i++) {
                 $result[$midIndex - $i] = $result[$midIndex - $i + 1] * $this->progress;
                 $result[$midIndex + $i] = $result[$midIndex + $i - 1] * $this->progress;
@@ -96,31 +87,18 @@ class Multipliers {
     }
 
     private function calculateRtp() {
-
         $probs = $this->probabilities;
         $mults = $this->multipliers;
-
-        // Применяем вероятности к структуре (умножаем)
         $weightedResults = array_map(function($m, $p) {
             return $m * $p;
         }, $mults, $probs);
-
         $this->actual_rtp = array_sum($weightedResults) * 100;
-
     }
 
     public function checkCondition() {
-        // Проверяем, нужно ли уменьшать или увеличивать прогресс
-
         $step = 0.01;
-        while (abs($this->actual_rtp - $this->target_rtp) > 10) {
-            // Устанавливаем шаг изменения прогресса
-            if ($this->actual_rtp > $this->target_rtp) {
-                $this->progress -= $step;
-            }
-            else{
-                    $this->progress += $step;
-                }
+        while ($this->actual_rtp > $this->target_rtp){
+            $this->progress -= $step;
             $this->calculateMultipliers();
             $this->calculateRtp();
         }
@@ -129,9 +107,11 @@ class Multipliers {
     public function get_multipliers(): array {
         return $this->multipliers;
     }
+
     public function get_actual_rtp(): float {
         return round($this->actual_rtp,2);
     }
+
     public function get_target_rtp(): float {
         return round($this->target_rtp,2);
     }
