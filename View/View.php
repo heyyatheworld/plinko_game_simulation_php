@@ -5,7 +5,6 @@ function render($model, $errors, $pdo) {
     <!DOCTYPE html>
     <html lang="ru">
 
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,37 +16,36 @@ function render($model, $errors, $pdo) {
     <body>
     <div class="container">
         <div class="left-container">
-            <h1>Приглашение ввести значения</h1>
-            <p>Пожалуйста, введите три значения ниже:</p>
+            <h1 style="text-align: center;">PLINKO DEMO</h1>
+            <p style="text-align: center;">Введите три значения ниже:</p>
 
             <form method="post" action="">
                 <label for="level">Выберите уровень:</label>
                 <select name="level" id="level">
-                    <option value="">-- Выберите --</option> <!-- Пустой вариант по умолчанию -->
+<!--                    <option value="">-- Выберите --</option> <!-- Пустой вариант по умолчанию -->-->
                     <?php
                     // Массив значений для выпадающего списка
                     $levels = range(7, 19); // Генерация массива значений от 7 до 19
                     foreach ($levels as $level) {
-                        echo "<option value='" . htmlspecialchars($level) . "'" . ($model->level == $level ? " selected" :"7") . ">" . htmlspecialchars($level) . "</option>";
+                        echo "<option value='" . htmlspecialchars($level) . "'" . ($level == 7 ? " selected" :"") . ">" . htmlspecialchars($level) . "</option>";
                     }
                     ?>
                 </select>
 
                 <label for="TargetRTP">Выберите RTP:</label>
                 <select name="TargetRTP" id="TargetRTP">
-                    <option value="">-- Выберите --</option> <!-- Пустой вариант по умолчанию -->
+<!--                    <option value="">-- Выберите --</option> <!-- Пустой вариант по умолчанию -->-->
                     <?php
                     // Массив значений для выпадающего списка RTP
                     $rtpLevels = range(75, 97, 2); // Генерация массива значений RTP
                     foreach ($rtpLevels as $rtp) {
-                        echo "<option value='" . htmlspecialchars($rtp) . "'" . ($model->target_rtp == $rtp ? " selected" :"77") . ">" . htmlspecialchars($rtp) . "</option>";
+                        echo "<option value='" . htmlspecialchars($rtp) . "'" . ($rtp == 77 ? " selected" :"") . ">" . htmlspecialchars($rtp) . "</option>";
                     }
                     ?>
                 </select>
 
                 <label for="number_of_games">Количество раундов:</label>
-<!--                <input type="text" id="number_of_games" name="number_of_games" value="--><?php //echo htmlspecialchars($model->number_of_games); ?><!--" required>-->
-                    <input type="text" id="number_of_games" name="number_of_games" value="0" required>
+                    <input type="text" id="number_of_games" name="number_of_games" value="1" required>
                 <button type="submit">Отправить</button>
             </form>
 
