@@ -14,6 +14,7 @@ class Controller {
         if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['reset'])) {
                 // Сброс значений
+                clearTable($this->pdo, 'results');
                 return [new Model(), []]; // Возвращаем пустую модель и пустой массив ошибок
             } else {
                 // Получение значений из формы
@@ -46,9 +47,9 @@ class Controller {
                     }
                 }
                 }
+                $model->actual_rtp = $this->get_total_results($model)/$this->get_total_bets($model);
             }
         }
-
         return [$model, $errors];
     }
 
@@ -63,5 +64,38 @@ class Controller {
         }
 
         return true; // Возвращаем true при успешном выполнении
+    }
+
+    public function get_total_bets (Model $model): float {
+        // Подготовка SQL-запроса
+        $stmt = $this->pdo->prepare("SELECT SUM(Bet) AS total_bet FROM results");
+
+        // Выполнение запроса
+        if (!$stmt->execute()) {
+            throw new Exception("Ошибка обращения к базе: " . implode(", ", $stmt->errorInfo()));
+        }
+
+        // Получение результата
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Возвращаем общее количество записей
+        $result = round((float)$result['total_bet'],2);
+        return $result;
+    }
+    public function get_total_results (Model $model): float {
+        // Подготовка SQL-запроса
+        $stmt = $this->pdo->prepare("SELECT SUM(Result) AS total_result FROM results");
+
+        // Выполнение запроса
+        if (!$stmt->execute()) {
+            throw new Exception("Ошибка обращения к базе: " . implode(", ", $stmt->errorInfo()));
+        }
+
+        // Получение результата
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Возвращаем общее количество записей
+        $result = round((float)$result['total_result'],2);
+        return $result;
     }
 }

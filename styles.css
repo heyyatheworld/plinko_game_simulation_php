@@ -22,22 +22,13 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
 }
 
+/* Стили для элементов в левом контейнере */
 .left-container label,
 .left-container input,
 .left-container select,
 .left-container button {
     width: calc(100% - 20px); /* Ширина с учетом отступов */
     margin-bottom: 10px; /* Отступ между элементами */
-}
-
-/* Правый контейнер */
-.right-container {
-    width: 80%; /* Ширина 80% */
-    padding: 20px;
-    margin-left: 20px; /* Отступ слева */
-    background-color: #fff; /* Белый фон */
-    border-radius: 5px; /* Закругленные углы */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
 }
 
 /* Стилизация таблицы */
@@ -49,40 +40,12 @@ table {
 th, td {
     border: 1px solid #ddd; /* Граница ячеек */
     padding: 8px; /* Отступы внутри ячеек */
+    text-align: center; /* Центрирование текста по горизонтали */
+    vertical-align: middle; /* Центрирование текста по вертикали */
 }
 
 th {
     background-color: #f2f2f2; /* Фон заголовков таблицы */
-}
-
-.error-message {
-    color: red; /* Цвет текста ошибок */
-}
-
-/* Стили для кнопок */
-button {
-    background-color: #4CAF50; /* Зеленый фон */
-    color: white; /* Белый цвет текста */
-    border: none; /* Убираем рамку */
-    padding: 10px 20px; /* Отступы внутри кнопки */
-    text-align: center; /* Выравнивание текста по центру */
-    text-decoration: none; /* Убираем подчеркивание текста */
-    display: inline-block; /* Позволяет задавать отступы вокруг кнопки */
-    font-size: 16px; /* Размер шрифта кнопки */
-    margin-top: 10px; /* Отступ сверху */
-    cursor: pointer; /* Курсор при наведении на кнопку */
-    border-radius: 5px; /* Закругление углов кнопки */
-    transition: background-color 0.3s ease; /* Плавный переход цвета фона */
-}
-
-/* Эффект при наведении на кнопку */
-button:hover {
-    background-color: #45a049; /* Темнее зеленый фон при наведении */
-}
-
-/* Эффект при нажатии на кнопку */
-button:active {
-    background-color: #3e8e41; /* Еще темнее фон при нажатии */
 }
 
 /* Стили для меток */
@@ -93,7 +56,7 @@ label {
     color: #333; /* Темно-серый цвет текста */
 }
 
-/* Стили для полей ввода */
+/* Стили для полей ввода и списков (select) */
 input[type="text"],
 input[type="email"],
 input[type="number"],
@@ -107,7 +70,7 @@ select {
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Легкая тень внутри поля */
 }
 
-/* Эффект при фокусе на поле ввода */
+/* Эффект при фокусе на поле ввода и списках (select)*/
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="number"]:focus,
@@ -116,7 +79,7 @@ select:focus {
     outline: none; /* Убираем стандартное обводка браузера */
 }
 
-/* Стили для списков (select) */
+/* Стили для списков (select)*/
 select {
     appearance: none; /* Убираем стандартный стиль браузера */
     background-image: url('data:image/png;base64,...'); /* Замените на изображение стрелки вниз */
@@ -124,31 +87,98 @@ select {
     background-position: right 10px center; /* Позиция стрелки */
 }
 
-/* Стилизация кнопок (если нужно) */
+/* Стили для кнопок*/
 button {
     background-color: #4CAF50; /* Зеленый фон кнопки */
     color: white; /* Белый цвет текста кнопки */
     border: none; /* Убираем рамку кнопки */
     padding: 10px 20px; /* Отступы внутри кнопки */
-    text-align: center; /* Выравнивание текста по центру */
-    text-decoration: none; /* Убираем подчеркивание текста кнопки */
-    display: inline-block; /* Позволяет задавать отступы вокруг кнопки */
-    font-size: 16px; /* Размер шрифта кнопки */
-    margin-top: 10px; /* Отступ сверху для отделения от других элементов */
-    cursor: pointer; /* Курсор при наведении на кнопку */
-    border-radius: 5px; /* Закругленные углы кнопки */
+    text-align: center; /* Выравнивание текста по центру кнопки*/
+    text-decoration: none; /* Убираем подчеркивание текста кнопки*/
+    display: inline-block; /* Позволяет задавать отступы вокруг кнопки*/
+    font-size: 16px; /* Размер шрифта кнопки*/
+    margin-top: 10px; /* Отступ сверху для отделения от других элементов*/
+    cursor: pointer; /* Курсор при наведении на кнопку*/
+    border-radius: 5px; /* Закругленные углы кнопки*/
 }
 
-/* Эффект при наведении на кнопку */
+/* Эффект при наведении на кнопку*/
 button:hover {
-    background-color: #45a049; /* Темнее зеленый фон при наведении на кнопку */
+    background-color: #45a049; /* Темнее зеленый фон при наведении на кнопку*/
+}
 
-    /* Новый верхний контейнер */
-    .top-right-container {
-        height: 20%; /* Высота 20% от родительского контейнера */
-        background-color: #f8f9fa; /* Светлый фон для верхнего контейнера */
-        padding: 10px; /* Отступы внутри верхнего контейнера */
-        border-radius: 5px; /* Закругленные углы */
-        margin-bottom: 20px; /* Отступ снизу между верхним и основным содержимым */
-    }
+/* Эффект при нажатии на кнопку*/
+button:active {
+    background-color: #3e8e41; /* Еще темнее фон при нажатии на кнопку*/
+}
+
+/* Стили для сообщений об ошибках*/
+.error-message {
+    color: red; /* Цвет текста ошибок*/
+}
+
+/* Правый контейнер (right-container) */
+.right-container {
+    display: flex; /* Используем flexbox для расположения дочерних элементов */
+    flex-direction: column; /* Вертикальное расположение дочерних элементов */
+    height :90vh ;/* Высота контейнера относительно высоты окна браузера */
+    border-radius :5px ;/* Закругленные углы контейнера */
+    width : calc(80% - 20px);/* Ширина контейнера с учетом отступа слева */
+    padding :20px ;/* Отступы внутри контейнера */
+    margin-left :20px ;/* Отступ слева от левого контейнера */
+    background-color :#fff ;/* Белый фон */
+    box-shadow :0 0 10px rgba(0,0,0,0.1);/* Тень */
+}
+
+/* Верхний правый контейнер (top-right-container) */
+.top-right-container {
+    display :flex ;/* Используем flexbox */
+    flex-direction :row ;/* Вертикальное расположение содержимого */
+    flex :1 ;/* Занимает оставшееся пространство по высоте */
+    padding :20px ;/* Отступы внутри контейнера */
+    background-color :#fff ;/* Белый фон */
+    border-radius :5px ;/* Закругленные углы */
+    box-shadow :0 0 10px rgba(0,0,0,0.1);/* Тень */
+    margin-bottom :20px ;/* Отступ снизу для отделения от других элементов */
+    border :1px solid #00796b ;/* Граница вокруг контейнера */
+}
+
+.top-right-left-container {
+    flex :0 0 auto ;/* Автоматическая высота */
+    width : calc(80% - 60px);/* Ширина контейнера с учетом отступа слева */
+    padding :20px ;/* Отступы внутри нового контейнера */
+    background-color :#fff ;/* Светлый фон для визуализации */
+
+}
+/* Правый правый контейнер (top-right-right-container) */
+.top-right-right-container {
+    flex :0 0 auto ;/* Автоматическая высота */
+    width : calc(20% - 60px);/* Ширина контейнера с учетом отступа слева */
+    text-align: center;
+    padding :40px ;/* Отступы внутри нового контейнера */
+    background-color :#fff ;/* Светлый фон для визуализации */
+
+}
+
+/* Контейнер для таблицы (table-container) */
+.table-container {
+    padding :20px ;/* Отступы внутри контейнера с таблицей */
+    background-color :#fff ;/* Белый фон для таблицы */
+    border-radius :5px ;/* Закругленные углы */
+    box-shadow :0 0 10px rgba(0,0,0,0.1);/* Тень */
+}
+
+table {
+    width :100%;/* Ширина таблицы на весь контейнер */
+    border-collapse :collapse ;/* Убираем двойные границы */
+}
+
+th, td {
+    border :1px solid #ddd ;/* Граница ячеек */
+    padding :8px ;/* Отступы внутри ячеек */
+    text-align :center ;/* Центрирование текста по горизонтали */
+}
+
+th {
+    background-color :#f2f2f2 ;/* Фон заголовков таблицы */
 }

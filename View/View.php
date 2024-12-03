@@ -22,7 +22,6 @@ function render($model, $errors, $pdo) {
             <form method="post" action="">
                 <label for="level">Выберите уровень:</label>
                 <select name="level" id="level">
-<!--                    <option value="">-- Выберите --</option> <!-- Пустой вариант по умолчанию -->-->
                     <?php
                     // Массив значений для выпадающего списка
                     $levels = range(7, 19); // Генерация массива значений от 7 до 19
@@ -34,7 +33,6 @@ function render($model, $errors, $pdo) {
 
                 <label for="TargetRTP">Выберите RTP:</label>
                 <select name="TargetRTP" id="TargetRTP">
-<!--                    <option value="">-- Выберите --</option> <!-- Пустой вариант по умолчанию -->-->
                     <?php
                     // Массив значений для выпадающего списка RTP
                     $rtpLevels = range(75, 97, 2); // Генерация массива значений RTP
@@ -69,21 +67,34 @@ function render($model, $errors, $pdo) {
 
         <div class="right-container">
             <div class="top-right-container">
+                <div class="top-right-left-container">
                 <?php if (!empty($model->target_rtp) || !empty($model->level) || !empty($model->number_of_games)): ?>
-                    <p>Множители данного уровня:
+                    <p style="text-align: center; font-size: 24px;">
+                        Множители данного уровня:
                         <?php
-                        if (isset($model)) {
-                            echo htmlspecialchars(implode(',',$model->multipliers));
+                        if (isset($model) && !empty($model->multipliers)) {
+                            echo htmlspecialchars(implode('  |  ', $model->multipliers)); // Используем три неразрывных пробела для разделения
                         } else {
                             echo 'Множители не определены.';
                         }
                         ?>
                     </p>
-                    <p>Выбранный уровень: <?php echo htmlspecialchars($model->level); ?></p>
-                    <p>Значение RTP: <?php echo htmlspecialchars($model->target_rtp); ?></p>
-                    <p>Количество игр: <?php echo htmlspecialchars($model->number_of_games); ?></p>
+                <p style="text-align: center;">
+                    Уровень:   <?php echo htmlspecialchars($model->level);?>
+                    RTP:   <?php echo htmlspecialchars($model->target_rtp);?>
+                    Количество игр:   <?php echo htmlspecialchars($model->number_of_games);?>
+                </p>
+                <?php endif; ?>
+                </div>
+
+            <div class="top-right-right-container">
+                <?php if (!empty($model->target_rtp) || !empty($model->number_of_games)): ?>
+                    <p style="text-align: center; font-size: 24px;">
+                        RTP: <?php echo htmlspecialchars(number_format($model->actual_rtp, 2)); ?>%
+                    </p>
                 <?php endif; ?>
             </div>
+    </div>
 
 
             <?php
@@ -94,7 +105,7 @@ function render($model, $errors, $pdo) {
 
                 if (count($results) > 0) {
                     echo "<table>";
-                    echo "<thead><tr><th>ID</th><th>Created At</th><th>Level</th><th>Target RTP</th><th>Bet</th><th>Result</th></tr></thead>";
+                    echo "<thead><tr><th>ID</th><th>Created at</th><th>Level</th><th>Target RTP</th><th>Bet</th><th>Result</th></tr></thead>";
                     echo "<tbody>";
 
                     foreach ($results as $row) {

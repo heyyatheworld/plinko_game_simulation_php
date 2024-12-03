@@ -2,6 +2,7 @@
 class Model {
     public int $level;
     public float $target_rtp;
+    public float $actual_rtp;
     public int $bet;
     public float $result;
     public array $random_sequence;
@@ -17,6 +18,8 @@ class Model {
         $this->bet = 1;
         $this->random_sequence = [];
         $this->multipliers = [];
+//      $this->number_of_random = 0;
+        $this->actual_rtp = 0;
     }
     public function calculate_round() {
         // Здесь можно добавить логику для вычисления результата
@@ -62,3 +65,4 @@ class Model {
         return $bet * $this->multipliers[$index];
     }
 }
+
