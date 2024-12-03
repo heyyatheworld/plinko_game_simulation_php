@@ -2,12 +2,13 @@
 class Controller {
     private $pdo;
 
+
     public function __construct(PDO $pdo) {
         $this->pdo = $pdo; // Сохраняем объект PDO в классе
     }
 
     public function handleRequest(): array {
-        $model = new Model();
+        $model = new Model;
         $errors = [];
 
         if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,16 +20,17 @@ class Controller {
                 $model->level = isset($_POST['level']) ? htmlspecialchars(trim($_POST['level'])) : '';
                 $model->target_rtp = isset($_POST['TargetRTP']) ? htmlspecialchars(trim($_POST['TargetRTP'])) : '';
                 $model->number_of_games = isset($_POST['number_of_games']) ? htmlspecialchars(trim($_POST['number_of_games'])) : '';
+                #$model->multipliers = [1,1,1];
 
                 // Проверка на наличие ошибок
                 if (empty($model->target_rtp)) {
-                    $errors[] = 'Значение 1 не должно быть пустым.';
+                    $errors[] = 'Значение не должно быть пустым.';
                 }
                 if (empty($model->level)) {
-                    $errors[] = 'Значение 2 не должно быть пустым.';
+                    $errors[] = 'Значение не должно быть пустым.';
                 }
                 if (empty($model->number_of_games)) {
-                    $errors[] = 'Значение 3 не должно быть пустым.';
+                    $errors[] = 'Значение не должно быть пустым.';
                 }
 
                 for($i = 0; $i < $model->number_of_games; $i++) {

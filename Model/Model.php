@@ -15,6 +15,8 @@ class Model {
         $this->number_of_games = $number_of_games;
         $this->result = 0;
         $this->bet = 1;
+        $this->random_sequence = [];
+        $this->multipliers = [];
     }
     public function calculate_round() {
         // Здесь можно добавить логику для вычисления результата

@@ -16,4 +16,4 @@ $controller = new Controller($pdo);
 list($model, $errors) = $controller->handleRequest();
 
 // Отображаем представление с моделью и ошибками
-render($model, $errors);
+render($model, $errors, $pdo);
