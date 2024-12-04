@@ -48,7 +48,7 @@ function render($model, $errors, $pdo) {
                     // Массив значений для выпадающего списка. Количество игр.
                     $quantity = [1, 100, 500, 1000,5000];
                     foreach ($quantity as $quan) {
-                        echo "<option value='" . htmlspecialchars($quan) . "'" . ($quan == 5000 ? " selected" :"") . ">" . htmlspecialchars($quan) . "</option>";
+                        echo "<option value='" . htmlspecialchars($quan) . "'" . ($quan == 1000 ? " selected" :"") . ">" . htmlspecialchars($quan) . "</option>";
                     }
                     ?>
                 </select>
@@ -99,7 +99,7 @@ function render($model, $errors, $pdo) {
             <div class="top-right-right-container">
                 <?php if (!empty($model->target_rtp) || !empty($model->number_of_games)): ?>
                     <p style="text-align: center; font-size: 24px;">
-                        RTP: <?php echo htmlspecialchars(number_format($model->actual_rtime_rtp, 2)); ?>%
+                        RTP: <?php echo htmlspecialchars(number_format($model->actual_session_rtp, 2)); ?>%
                     </p>
                 <?php endif; ?>
             </div>
