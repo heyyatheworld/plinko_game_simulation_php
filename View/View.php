@@ -43,7 +43,17 @@ function render($model, $errors, $pdo) {
                 </select>
 
                 <label for="number_of_games">Количество раундов:</label>
-                    <input type="text" id="number_of_games" name="number_of_games" value="5000" required>
+<!--                    <input type="text" id="number_of_games" name="number_of_games" value="5000" required>-->
+                <select name="number_of_games" id="number_of_games">
+                    <?php
+                    // Массив значений для выпадающего списка RTP
+                    $quantity = [1, 100, 500, 1000,5000];
+                    foreach ($quantity as $quan) {
+                        echo "<option value='" . htmlspecialchars($quan) . "'" . ($quan == 5000 ? " selected" :"") . ">" . htmlspecialchars($quan) . "</option>";
+                    }
+                    ?>
+                </select>
+
                 <button type="submit">Отправить</button>
             </form>
 
@@ -69,11 +79,11 @@ function render($model, $errors, $pdo) {
             <div class="top-right-container">
                 <div class="top-right-left-container">
                 <?php if (!empty($model->target_rtp) || !empty($model->level) || !empty($model->number_of_games)): ?>
+                    <p style="text-align: center;">Множители данного уровня:<br></p>
                     <p style="text-align: center; font-size: 24px;">
-                        Множители данного уровня:
                         <?php
                         if (isset($model) && !empty($model->multipliers)) {
-                            echo htmlspecialchars(implode('  |  ', $model->multipliers)); // Используем три неразрывных пробела для разделения
+                            echo htmlspecialchars(implode('  |  ', $model->multipliers));
                         } else {
                             echo 'Множители не определены.';
                         }

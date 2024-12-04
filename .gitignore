@@ -12,6 +12,7 @@ config.php
 # Файлы IDE
 .idea/
 .vscode/
+.DS_Store
 
 # Кэш и временные файлы
 /cache/

@@ -145,7 +145,7 @@ button:active {
 
 .top-right-left-container {
     flex :0 0 auto ;/* Автоматическая высота */
-    width : calc(80% - 60px);/* Ширина контейнера с учетом отступа слева */
+    width : calc(85% - 60px);/* Ширина контейнера с учетом отступа слева */
     padding :20px ;/* Отступы внутри нового контейнера */
     background-color :#fff ;/* Светлый фон для визуализации */
 
@@ -153,7 +153,7 @@ button:active {
 /* Правый правый контейнер (top-right-right-container) */
 .top-right-right-container {
     flex :0 0 auto ;/* Автоматическая высота */
-    width : calc(20% - 60px);/* Ширина контейнера с учетом отступа слева */
+    width : calc(15% - 60px);/* Ширина контейнера с учетом отступа слева */
     text-align: center;
     padding :40px ;/* Отступы внутри нового контейнера */
     background-color :#fff ;/* Светлый фон для визуализации */
