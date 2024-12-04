@@ -23,8 +23,8 @@ function render($model, $errors, $pdo) {
                 <label for="level">Выберите уровень:</label>
                 <select name="level" id="level">
                     <?php
-                    // Массив значений для выпадающего списка
-                    $levels = range(7, 19); // Генерация массива значений от 7 до 19
+                    // Массив значений для выпадающего списка. Уровни.
+                    $levels = range(7, 19);
                     foreach ($levels as $level) {
                         echo "<option value='" . htmlspecialchars($level) . "'" . ($level == 7 ? " selected" :"") . ">" . htmlspecialchars($level) . "</option>";
                     }
@@ -34,7 +34,7 @@ function render($model, $errors, $pdo) {
                 <label for="TargetRTP">Выберите RTP:</label>
                 <select name="TargetRTP" id="TargetRTP">
                     <?php
-                    // Массив значений для выпадающего списка RTP
+                    // Массив значений для выпадающего списка. RTP.
                     $rtpLevels = range(75, 97, 2); // Генерация массива значений RTP
                     foreach ($rtpLevels as $rtp) {
                         echo "<option value='" . htmlspecialchars($rtp) . "'" . ($rtp == 77 ? " selected" :"") . ">" . htmlspecialchars($rtp) . "</option>";
@@ -43,10 +43,9 @@ function render($model, $errors, $pdo) {
                 </select>
 
                 <label for="number_of_games">Количество раундов:</label>
-<!--                    <input type="text" id="number_of_games" name="number_of_games" value="5000" required>-->
                 <select name="number_of_games" id="number_of_games">
                     <?php
-                    // Массив значений для выпадающего списка RTP
+                    // Массив значений для выпадающего списка. Количество игр.
                     $quantity = [1, 100, 500, 1000,5000];
                     foreach ($quantity as $quan) {
                         echo "<option value='" . htmlspecialchars($quan) . "'" . ($quan == 5000 ? " selected" :"") . ">" . htmlspecialchars($quan) . "</option>";
@@ -117,7 +116,7 @@ function render($model, $errors, $pdo) {
                     echo "<table>";
                     echo "<thead><tr><th>ID</th><th>Created at</th><th>Level</th><th>Target RTP</th><th>Bet</th><th>Result</th></tr></thead>";
                     echo "<tbody>";
-
+                    // Печать таблицы.
                     foreach ($results as $row) {
                         echo "<tr>";
                         echo "<td>" . htmlspecialchars($row['id']) . "</td>";

@@ -1,27 +1,30 @@
 <?php
 class Multipliers {
-    private int $level;
-    private float $target_rtp;
-    private float $actual_rtp;
-    private float $progress;
-    private array $probabilities;
-    private array $multipliers;
+    /**Генерация мультипликаторов на основе уровня и целевого RTP.*/
+    private int $level; // Уровень игры.
+    private float $target_rtp; //Целевой RTP.
+    private float $actual_rtp; //Текущий RTP.
+    private float $progress; //Коэффициент для аппроксимации мультипликаторов.
+    private array $probabilities; //Массив вероятностей для текущего уровня игры..
+    private array $multipliers; //Массив мультипликаторов.
 
 
     public function __construct(int $level, float $rtp) {
+        /** Инициализация класса с заданным уровнем и RTP. */
         $this->level = $level;
         $this->target_rtp = $rtp;
         $this->actual_rtp = 0;
-        $this->progress = 2.625; // Значение прогрессии
+        $this->progress = 2.625; // Значение прогрессии. Получено опытным путём.
         $this->probabilities = [];
         $this->multipliers = [];
 
-        $this->calculateProbabilities();
-        $this->calculateMultipliers();
-        $this->checkCondition();
+        $this->calculateProbabilities();     //Считаем вероятности.
+        $this->calculateMultipliers();      //Считаем мультипликаторы.
+        $this->checkCondition();            //Проверяем условия.
     }
 
     private static function factorial(int $num): int {
+        /**Вычисляет факториал числа.*/
         if ($num === 0 || $num === 1) {
             return 1;
         }
@@ -33,6 +36,7 @@ class Multipliers {
     }
 
     private static function calculateBinomialCoefficient(int $n, int $k): int {
+        /**Вычисляет биномиальные коэффициенты.*/
         if ($k < 0 || $k > $n) {
             return 0;
         }
@@ -40,6 +44,7 @@ class Multipliers {
     }
 
     private static function roundToNearestFive(float $num): float {
+        /**Округляет десятичные знаки числа до ближайшей "пятёрки".*/
         $integerPart = (int)$num;
         $fractionalPart = $num - $integerPart;
         $roundedFraction = round($fractionalPart * 100 / 5) * 5 / 100;
@@ -47,6 +52,7 @@ class Multipliers {
     }
 
     private function calculateProbabilities() {
+        /**Вычисляет вероятности исходов. Вероятность= Бин. Коэффициент \ Сумма всех Бин. Коэффициентов.*/
         $level = $this->level + 1; // Увеличиваем уровень на 1 для создания списка
         $probs = array_fill(0, $level, 0.0);
         $binomials = array_fill(0, $level, 0);
@@ -61,6 +67,7 @@ class Multipliers {
     }
 
     private function calculateMultipliers() {
+        /**Вычисляет мультипликаторы.*/
         $level = $this->level + 1;
         $result = array_fill(0, $level, 0.5);
         $n = count($result);
@@ -87,6 +94,7 @@ class Multipliers {
     }
 
     private function calculateRtp() {
+        /**Вычисляет RTP для текущей версии(при аппроксимации) мультипликаторов.*/
         $probs = $this->probabilities;
         $mults = $this->multipliers;
         $weightedResults = array_map(function($m, $p) {
@@ -96,6 +104,7 @@ class Multipliers {
     }
 
     public function checkCondition() {
+        /**Проверяет версию мультипликаторов на выполнение условий.*/
         $step = 0.01;
         while ($this->actual_rtp > $this->target_rtp){
             $this->progress -= $step;
@@ -105,14 +114,12 @@ class Multipliers {
     }
 
     public function get_multipliers(): array {
+        /**Геттер для массива мультипликаторов.*/
         return $this->multipliers;
     }
 
     public function get_actual_rtp(): float {
+        /**Геттер для итогового RTP.*/
         return round($this->actual_rtp,2);
-    }
-
-    public function get_target_rtp(): float {
-        return round($this->target_rtp,2);
     }
 }
